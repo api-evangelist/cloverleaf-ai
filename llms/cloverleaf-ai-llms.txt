@@ -1,0 +1,20 @@
+# Cloverleaf AI
+
+> Cloverleaf AI is the B2G sales intelligence platform that monitors 45,000+ government organizations and turns public meetings into pre-RFP buying signals, so sellers reach government buyers before the RFP is published.
+
+Cloverleaf AI serves up 50,000+ insights daily across federal, state, local, and education (SLED) agencies. It monitors committee meetings, budget discussions, and procurement activity, then delivers a prioritized, territory-specific brief to each seller every morning, synced to Salesforce. Cloverleaf AI operates at cloverleaf.ai, is a government (B2G) sales intelligence company, and is headquartered in Denver, Colorado.
+
+## Key Resources
+- [Home](https://www.cloverleaf.ai/): Overview of Cloverleaf AI, the B2G sales intelligence platform for public-sector sellers.
+- [How It Works](https://www.cloverleaf.ai/how-it-works/): How Cloverleaf AI turns government meeting signals into daily, territory-specific sales intelligence, from signal to insight to action.
+- [For Sellers](https://www.cloverleaf.ai/for-sellers/): Use cases and benefits for B2G sales professionals, including pre-RFP signals, buyer research, and Salesforce sync.
+- [Get a Demo](https://www.cloverleaf.ai/get-a-demo/): Request a live demonstration of Cloverleaf AI for your territory.
+
+## Legal
+- [Terms of Service](https://www.cloverleaf.ai/terms-of-service/)
+- [Privacy Policy](https://www.cloverleaf.ai/privacy-policy/)
+
+## Company Info
+- LinkedIn: https://www.linkedin.com/company/cloverleaf-ai/
+- Contact: support@cloverleaf.ai
+- Phone: +1-847-414-5740

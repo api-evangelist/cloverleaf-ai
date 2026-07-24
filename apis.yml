@@ -1,19 +1,55 @@
 aid: cloverleaf-ai
 name: Cloverleaf AI
-description: Cloverleaf AI is a company surfaced as a portfolio company of techstars and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Cloverleaf AI is a business-to-government (B2G) sales intelligence platform,
+  headquartered in Denver, Colorado, that monitors 45,000+ government
+  organizations across federal, state, local, and education (SLED) agencies and
+  turns 1.5 million public government meetings into pre-RFP buying signals.
+  It analyzes committee meetings, budget discussions, and procurement activity,
+  applies custom speech-to-text and speaker "vocal fingerprinting" (70,000+
+  verified speakers) to attribute officials' positions, and delivers a
+  prioritized, territory-specific daily brief to each seller, synced to
+  Salesforce, so government contractors reach buyers before the RFP is
+  published. Products include the Opportunity Database and Vocal Fingerprinting.
+  Cloverleaf AI is Techstars-backed and raised seed funding led by Jackson
+  Square Ventures. No public developer API or documentation is currently
+  published; the platform is delivered as a SaaS product with a Salesforce
+  integration and a demo-request sales motion.
 url: https://raw.githubusercontent.com/api-evangelist/cloverleaf-ai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - techstars
+- jackson-square-ventures
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://www.cloverleaf.ai/wp-content/uploads/cloverleaf-logo.svg
 tags:
 - Company
+- Government
+- B2G
+- Sales Intelligence
+- Public Sector
+- GovTech
+- Procurement
+- RFP
+- Legislative Intelligence
+- Speech to Text
+- Artificial Intelligence
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -21,5 +57,34 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/cloverleaf-ai-domain-security.yml
 - type: Website
-  url: https://cloverleaf.ai/
+  url: https://www.cloverleaf.ai/
+- type: HowItWorks
+  url: https://www.cloverleaf.ai/how-it-works/
+- type: SignUp
+  url: https://www.cloverleaf.ai/get-started/
+- type: GettingStarted
+  url: https://www.cloverleaf.ai/get-started/
+- type: Demo
+  url: https://www.cloverleaf.ai/get-a-demo/
+- type: TrustCenter
+  url: https://trust.cloverleaf.ai/
+- type: TermsOfService
+  url: https://www.cloverleaf.ai/terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.cloverleaf.ai/privacy-policy/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/cloverleaf-ai/
+- type: Support
+  url: mailto:support@cloverleaf.ai
+- type: LLMsTxt
+  url: llms/cloverleaf-ai-llms.txt
+- type: WellKnown
+  url: well-known/cloverleaf-ai-well-known.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
