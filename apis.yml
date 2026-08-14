@@ -12,9 +12,12 @@ description: >-
   Salesforce, so government contractors reach buyers before the RFP is
   published. Products include the Opportunity Database and Vocal Fingerprinting.
   Cloverleaf AI is Techstars-backed and raised seed funding led by Jackson
-  Square Ventures. No public developer API or documentation is currently
-  published; the platform is delivered as a SaaS product with a Salesforce
-  integration and a demo-request sales motion.
+  Square Ventures. It publishes no REST API, OpenAPI, SDK or developer portal,
+  but it does operate a remote, OAuth-protected Model Context Protocol (MCP)
+  server at mcp.cloverleaf.ai that exposes the platform to AI agents — an agent
+  surface the company documents nowhere on its own site. The platform is
+  otherwise delivered as a SaaS product with a Salesforce integration and a
+  demo-request sales motion.
 url: https://raw.githubusercontent.com/api-evangelist/cloverleaf-ai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -36,7 +39,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-14'
 image: https://www.cloverleaf.ai/wp-content/uploads/cloverleaf-logo.svg
 tags:
 - Company
@@ -50,7 +53,41 @@ tags:
 - Legislative Intelligence
 - Speech to Text
 - Artificial Intelligence
-apis: []
+apis:
+- name: Cloverleaf AI MCP Server
+  description: >-
+    A remote, OAuth-protected Model Context Protocol server that exposes Cloverleaf AI's
+    government meeting intelligence to AI agents and assistants. Found by host discovery
+    (mcp.cloverleaf.ai) rather than from documentation — the company publishes no
+    developer portal and never mentions the server on its marketing site. The endpoint is
+    the host root and speaks MCP Streamable HTTP (GET/POST/OPTIONS, Mcp-Session-Id). All
+    calls, including initialize and tools/list, require an OAuth 2.0 bearer token issued
+    by the company's own Auth0 tenant at auth.cloverleaf.ai; the server advertises the
+    full RFC 9728 + RFC 8414 discovery chain with PKCE S256 and dynamic client
+    registration, so a generic MCP client can authenticate without hand-issued
+    credentials. The tool set itself is auth-gated and is not published anywhere.
+  humanURL: https://www.cloverleaf.ai/how-it-works/
+  baseURL: https://mcp.cloverleaf.ai/
+  tags:
+  - MCP
+  - Model Context Protocol
+  - OAuth
+  - Agents
+  - Government
+  - Sales Intelligence
+  properties:
+  - type: MCPServer
+    url: mcp/cloverleaf-ai-mcp.yml
+  - type: Authentication
+    url: authentication/cloverleaf-ai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/cloverleaf-ai-scopes.yml
+  - type: ErrorCatalog
+    url: errors/cloverleaf-ai-problem-types.yml
+  - type: Conventions
+    url: conventions/cloverleaf-ai-conventions.yml
+  - type: RateLimits
+    url: rate-limits/cloverleaf-ai-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -83,8 +120,36 @@ common:
   url: llms/cloverleaf-ai-llms.txt
 - type: WellKnown
   url: well-known/cloverleaf-ai-well-known.yml
+- type: MCPServer
+  url: mcp/cloverleaf-ai-mcp.yml
+- type: Authentication
+  url: authentication/cloverleaf-ai-authentication.yml
+- type: OAuthScopes
+  url: scopes/cloverleaf-ai-scopes.yml
+- type: Lifecycle
+  url: lifecycle/cloverleaf-ai-lifecycle.yml
+- type: StatusPage
+  url: https://status.cloverleaf.ai/
+- type: Conformance
+  url: conformance/cloverleaf-ai-conformance.yml
+- type: ErrorCatalog
+  url: errors/cloverleaf-ai-problem-types.yml
+- type: Conventions
+  url: conventions/cloverleaf-ai-conventions.yml
+- type: Plans
+  url: plans/cloverleaf-ai-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cloverleaf-ai-rate-limits.yml
+- type: Login
+  url: https://app.cloverleaf.ai/
+- type: BlogRSS
+  url: https://www.cloverleaf.ai/feed/
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 14
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery found a previously unrecorded remote OAuth-protected MCP server at
+    mcp.cloverleaf.ai. Still no OpenAPI, SDK, sandbox, changelog, CLI, webhooks or A2A
+    agent card anywhere on the estate.
