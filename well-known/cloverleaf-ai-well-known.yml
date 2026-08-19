@@ -1,19 +1,76 @@
-generated: '2026-07-18'
-method: searched
-source: https://www.cloverleaf.ai/
-host: https://www.cloverleaf.ai
-documents:
-- path: /.well-known/security.txt
-  status: 404
-- path: /.well-known/openid-configuration
-  status: 404
-- path: /.well-known/oauth-authorization-server
-  status: 404
-- path: /.well-known/api-catalog
-  status: 404
-- path: /.well-known/ai-plugin.json
-  status: 404
+generated: '2026-08-14'
+method: probed
+source: live GET of /.well-known/* on every Cloverleaf AI host discovered by DNS
+hosts:
+- host: https://mcp.cloverleaf.ai
+  role: MCP server (Model Context Protocol, Streamable HTTP)
+  documents:
+  - path: /.well-known/oauth-protected-resource   # RFC 9728
+    status: 200
+    content_type: application/json
+    file: cloverleaf-ai-oauth-protected-resource.json
+  - path: /.well-known/oauth-authorization-server # RFC 8414
+    status: 200
+    content_type: application/json
+    file: cloverleaf-ai-oauth-authorization-server.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://auth.cloverleaf.ai
+  role: Authorization server (Auth0 tenant cloverleaf-prod.us.auth0.com)
+  documents:
+  - path: /.well-known/openid-configuration       # OIDC Discovery 1.0
+    status: 200
+    content_type: application/json
+    file: cloverleaf-ai-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server # RFC 8414 (same document)
+    status: 200
+    content_type: application/json
+    note: byte-identical to the OIDC discovery document; not saved twice
+- host: https://www.cloverleaf.ai
+  role: Marketing website (WordPress)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    note: not a /.well-known/ path; captured at llms/cloverleaf-ai-llms.txt
+- host: https://api.cloverleaf.ai
+  role: Application API host (Rails); 404s every anonymous path
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://trust.cloverleaf.ai
+  role: Trust center (Vanta)
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    note: >-
+      NOT a document. The Vanta single-page app answers 200 with the same HTML shell
+      for every path including /robots.txt and /sitemap.xml. Recorded as a miss.
 notes: >-
-  No /.well-known/ discovery documents are published on www.cloverleaf.ai or
-  the apex cloverleaf.ai host (all probed paths return 404). An llms.txt IS
-  published at https://www.cloverleaf.ai/llms.txt (see llms/cloverleaf-ai-llms.txt).
+  The discovery surface that matters here is on the MCP host, not the website. The
+  marketing site publishes nothing under /.well-known/, but mcp.cloverleaf.ai serves a
+  complete RFC 9728 + RFC 8414 authorization discovery chain pointing at the company's
+  own Auth0 tenant at auth.cloverleaf.ai, and that chain is what lets an MCP client
+  discover how to authenticate. A prior round recorded only the www host and its five
+  404s.

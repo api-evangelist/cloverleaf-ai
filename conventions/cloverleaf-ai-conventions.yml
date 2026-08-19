@@ -1,0 +1,76 @@
+generated: '2026-08-14'
+method: probed
+source: live request/response observation against https://mcp.cloverleaf.ai/
+
+# Cross-cutting runtime semantics for the one machine-callable surface Cloverleaf AI
+# operates. Derived from observed headers and responses, not from documentation — none
+# is published. Where a convention could not be observed it is recorded as unknown
+# rather than assumed.
+
+surface: MCP server (https://mcp.cloverleaf.ai/)
+
+authentication:
+  style: oauth2-bearer
+  header: 'Authorization: Bearer <access_token>'
+  discovery: >-
+    RFC 9728 — the 401 challenge names the protected-resource metadata URL, which names
+    the authorization server. A client needs no out-of-band configuration.
+  detail: authentication/cloverleaf-ai-authentication.yml
+
+transport:
+  protocol: MCP Streamable HTTP
+  endpoint: https://mcp.cloverleaf.ai/
+  methods: [GET, POST, OPTIONS]
+  accept: application/json, text/event-stream
+  session:
+    header: Mcp-Session-Id
+    exposed_via: 'Access-Control-Expose-Headers: Mcp-Session-Id'
+    note: server-issued session id, returned on initialize and echoed on later calls
+  protocol_version_header: mcp-protocol-version
+  cors:
+    allow_origin: '*'
+    allow_headers: [Content-Type, mcp-session-id, mcp-protocol-version, Authorization, Accept, User-Agent, X-Requested-With]
+
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    NOT ASSERTED. No idempotency key header, parameter or documentation was observed, and
+    the tool surface is auth-gated so no write tool could be inspected. Recorded as
+    unknown; no Idempotency pointer is emitted in apis.yml, because claiming one without
+    evidence would be a fabrication.
+
+pagination:
+  style: unknown
+  note: tool schemas are auth-gated; no pagination contract is observable anonymously
+
+versioning:
+  style: negotiated-per-session
+  note: >-
+    No URL or header API version. MCP protocol version is negotiated at initialize via
+    mcp-protocol-version. See lifecycle/cloverleaf-ai-lifecycle.yml.
+
+error_envelope:
+  shape: '{"error": "...", "error_description": "..."}'
+  spec: RFC 6749 / RFC 6750 (not RFC 9457)
+  detail: errors/cloverleaf-ai-problem-types.yml
+
+rate_limit_signaling:
+  headers_observed: []
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was present on any observed
+    response from mcp.cloverleaf.ai. app.cloverleaf.ai (Auth0) did return HTTP 429 during
+    probing, but that is Auth0's tenant protection, not a documented API limit.
+    See rate-limits/cloverleaf-ai-rate-limits.yml.
+
+request_tracing:
+  header: x-cloud-trace-context
+  note: >-
+    Google Cloud trace id is returned on every response. It is infrastructure telemetry,
+    not a documented correlation id, but it is the only request identifier available to a
+    caller reporting a problem.
+
+infrastructure_observed:
+  server: Google Frontend (Cloud Run / GCLB)
+  app: Express (x-powered-by)
+  http_versions: [HTTP/2, 'h3 advertised via alt-svc']

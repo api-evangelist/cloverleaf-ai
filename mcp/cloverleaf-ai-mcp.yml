@@ -1,0 +1,91 @@
+generated: '2026-08-14'
+method: probed
+source: https://mcp.cloverleaf.ai/
+status: published
+
+# Cloverleaf AI operates a REMOTE, OAuth-protected Model Context Protocol server
+# at https://mcp.cloverleaf.ai/. It was found by host discovery (mcp.cloverleaf.ai
+# resolves to a Google Cloud front end), not from any published documentation —
+# the company's marketing site (8 pages, WordPress) never mentions it, and there is
+# no developer portal. Ownership is proven from the server's own responses, not the
+# fetch URL: /health returns {"service":"cloverleaf-ai-mcp"} and the RFC 9728
+# protected-resource document names resource_name "Cloverleaf AI" with its
+# authorization server at https://auth.cloverleaf.ai/ (the company's own Auth0
+# tenant, cloverleaf-prod.us.auth0.com).
+
+deployment:
+  mode: remote
+  endpoint: https://mcp.cloverleaf.ai/
+  auth: oauth
+  verified: probed
+
+server:
+  name: cloverleaf-ai-mcp
+  transport: http                      # Streamable HTTP (MCP 2025-03-26+)
+  url: https://mcp.cloverleaf.ai/
+  health: https://mcp.cloverleaf.ai/health
+  implementation: 'Express (x-powered-by: Express) behind Google Frontend'
+  session_header: Mcp-Session-Id       # exposed via access-control-expose-headers
+  methods_allowed: [GET, POST, OPTIONS]
+
+authorization:
+  model: oauth2
+  spec:
+    - RFC 9728 OAuth 2.0 Protected Resource Metadata
+    - RFC 8414 OAuth 2.0 Authorization Server Metadata
+    - RFC 7591 Dynamic Client Registration
+    - RFC 7636 PKCE (S256)
+  protected_resource_metadata: https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource
+  authorization_server: https://auth.cloverleaf.ai/
+  authorization_endpoint: https://auth.cloverleaf.ai/authorize
+  token_endpoint: https://auth.cloverleaf.ai/oauth/token
+  registration_endpoint: https://auth.cloverleaf.ai/oidc/register
+  revocation_endpoint: https://auth.cloverleaf.ai/oauth/revoke
+  grant_types: [authorization_code, refresh_token]
+  code_challenge_methods: [S256]
+  scopes: [openid, profile, email, offline_access]
+  challenge_header: >-
+    Bearer error="invalid_token", error_description="Missing Authorization header",
+    resource_metadata="https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource"
+
+# NOT FABRICATED. tools/list and initialize both return HTTP 401 invalid_token to an
+# anonymous client, so the live tool schemas require an authenticated introspection we
+# did not and will not perform. No tool list is published in llms.txt or anywhere else
+# on the company's public surface, so there is nothing to fall back to. The tool set is
+# therefore UNKNOWN — recorded as an empty list rather than guessed from the product
+# marketing copy.
+tools: []
+tools_status: auth-gated
+tools_note: >-
+  POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://mcp.cloverleaf.ai/
+  returns HTTP 401 {"error":"invalid_token"}. Same for initialize. Input schemas
+  require an authenticated MCP session; none are published publicly.
+
+x-evidence:
+  fetched: '2026-08-14'
+  probes:
+    - url: https://mcp.cloverleaf.ai/health
+      method: GET
+      http_status: 200
+      body: '{"status":"healthy","service":"cloverleaf-ai-mcp"}'
+    - url: https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource
+      method: GET
+      http_status: 200
+      content_type: application/json
+      file: well-known/cloverleaf-ai-oauth-protected-resource.json
+    - url: https://mcp.cloverleaf.ai/.well-known/oauth-authorization-server
+      method: GET
+      http_status: 200
+      content_type: application/json
+      file: well-known/cloverleaf-ai-oauth-authorization-server.json
+    - url: https://mcp.cloverleaf.ai/
+      method: 'POST tools/list'
+      http_status: 401
+      body: '{"error":"invalid_token","error_description":"Missing Authorization header"}'
+    - url: https://mcp.cloverleaf.ai/
+      method: 'POST initialize'
+      http_status: 401
+    - url: https://mcp.cloverleaf.ai/mcp
+      method: GET
+      http_status: 404
+      note: the MCP endpoint is the host ROOT, not /mcp or /sse

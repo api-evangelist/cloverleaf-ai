@@ -1,0 +1,13 @@
+{
+    "resource": "https://mcp.cloverleaf.ai/",
+    "authorization_servers": [
+        "https://auth.cloverleaf.ai/"
+    ],
+    "scopes_supported": [
+        "openid",
+        "profile",
+        "email",
+        "offline_access"
+    ],
+    "resource_name": "Cloverleaf AI"
+}

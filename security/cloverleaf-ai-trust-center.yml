@@ -1,0 +1,34 @@
+generated: '2026-08-14'
+method: probed
+probe: true
+url: https://trust.cloverleaf.ai/
+http_status: 200
+provider: Vanta (CNAME 68809767da9ce31a7ad9c785.cname.vantatrust.com)
+title: Cloverleaf AI Trust Center
+certifications: []
+certifications_status: unreadable
+note: >-
+  A trust center exists and is branded to the company — the served HTML carries
+  <title>Cloverleaf AI Trust Center</title> and a canonical link to
+  https://trust.cloverleaf.ai — but it is a Vanta single-page app. The 4.5KB HTML
+  document contains no certification names; the entire report renders client-side. Probed
+  the obvious data paths (/api/trust-report, /trust-report.json, /robots.txt,
+  /sitemap.xml) and the SPA catch-all answers 200 with the same shell for every one, and
+  Vanta's own API returns 401. NO certification is asserted here: SOC 2, ISO 27001, HIPAA
+  and FedRAMP are all plausible for a company selling to government, and none of them was
+  observed, so none is recorded. Consequently NO `Compliance` pointer is emitted in
+  apis.yml.
+provider_action: >-
+  Server-render the certification list, or expose the trust report as a machine-readable
+  document. As deployed, the trust center is invisible to every crawler, agent and
+  automated vendor-review tool that a public-sector buyer would run.
+evidence:
+- source: https://trust.cloverleaf.ai/
+  http_status: 200
+  content_type: text/html
+  finding: 'JS-rendered shell; keyword scan for soc 2 / iso 27001 / pci / hipaa / fedramp / gdpr returned no hits'
+- source: https://trust.cloverleaf.ai/robots.txt
+  http_status: 200
+  finding: returns the same HTML shell — SPA catch-all, not a real document
+- source: https://api.vanta.com/v1/trust-pages/68809767da9ce31a7ad9c785
+  http_status: 401

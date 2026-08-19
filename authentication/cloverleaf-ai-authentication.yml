@@ -1,0 +1,77 @@
+generated: '2026-08-14'
+method: probed
+source: >-
+  https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource,
+  https://mcp.cloverleaf.ai/.well-known/oauth-authorization-server,
+  https://auth.cloverleaf.ai/.well-known/openid-configuration
+
+# Derived from the live discovery documents, not from an OpenAPI spec — Cloverleaf AI
+# publishes no OpenAPI. This is the authentication contract for the one machine-callable
+# surface the company operates: the MCP server at https://mcp.cloverleaf.ai/.
+
+summary:
+  types: [oauth2, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  bearer_token: true
+  pkce_required_methods: [S256]
+  dynamic_client_registration: true
+  covers: MCP server (https://mcp.cloverleaf.ai/)
+  no_api_key_program: >-
+    No API key or personal access token program is documented anywhere on the public
+    surface. The only observed credential path is the OAuth authorization-code flow
+    against the company's Auth0 tenant.
+
+schemes:
+- name: mcp-oauth2
+  type: oauth2
+  applies_to: https://mcp.cloverleaf.ai/
+  sources: [well-known/cloverleaf-ai-oauth-protected-resource.json]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.cloverleaf.ai/authorize
+    tokenUrl: https://auth.cloverleaf.ai/oauth/token
+    refreshUrl: https://auth.cloverleaf.ai/oauth/token
+    scopes:
+      openid: OpenID Connect authentication
+      profile: Basic profile claims
+      email: Email address claim
+      offline_access: Refresh token issuance
+  token_type: Bearer
+  presented_as: 'Authorization: Bearer <access_token>'
+  challenge_on_missing_token: >-
+    HTTP 401 with WWW-Authenticate: Bearer error="invalid_token",
+    resource_metadata="https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource"
+
+- name: auth0-oidc
+  type: openIdConnect
+  applies_to: https://app.cloverleaf.ai/ (web application sign-in)
+  openIdConnectUrl: https://auth.cloverleaf.ai/.well-known/openid-configuration
+  sources: [well-known/cloverleaf-ai-openid-configuration.json]
+  issuer: https://auth.cloverleaf.ai/
+  jwks_uri: https://auth.cloverleaf.ai/.well-known/jwks.json
+  userinfo_endpoint: https://auth.cloverleaf.ai/userinfo
+  id_token_signing_alg_values_supported: [HS256, RS256, PS256]
+  dpop_signing_alg_values_supported: [ES256]
+  mfa: true      # mfa_challenge_endpoint advertised
+  provider: Auth0 (tenant cloverleaf-prod.us.auth0.com)
+
+registration:
+  dynamic: true
+  spec: RFC 7591
+  endpoint: https://auth.cloverleaf.ai/oidc/register
+  note: >-
+    Open dynamic client registration is what lets a generic MCP client (Claude, ChatGPT)
+    connect without a hand-issued client_id. It was observed as advertised metadata only;
+    no registration request was made.
+
+x-evidence:
+- url: https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource
+  http_status: 200
+- url: https://mcp.cloverleaf.ai/.well-known/oauth-authorization-server
+  http_status: 200
+- url: https://auth.cloverleaf.ai/.well-known/openid-configuration
+  http_status: 200
+- url: https://mcp.cloverleaf.ai/
+  http_status: 401
+  note: anonymous POST returns the Bearer challenge quoted above

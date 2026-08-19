@@ -42,6 +42,16 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cloverleaf AI is a company surfaced as a portfolio company of techstars and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Cloverleaf AI is a B2G (business-to-government) sales intelligence platform that monitors 45,000+
+government organizations and turns public government meetings into pre-RFP buying signals.
 
-Backed by: techstars — https://cloverleaf.ai/
+**What this profile found.** Cloverleaf AI publishes no REST API, no OpenAPI, no SDK and no developer
+portal — its eight-page marketing site funnels every commercial path into a demo request. It does,
+however, operate a **remote, OAuth-protected Model Context Protocol (MCP) server** at
+`https://mcp.cloverleaf.ai/`, discovered by host enumeration rather than from any documentation. The
+server speaks MCP Streamable HTTP and advertises a complete RFC 9728 + RFC 8414 authorization
+discovery chain (PKCE S256, dynamic client registration) pointing at the company's own Auth0 tenant
+at `auth.cloverleaf.ai`. Its tool list is behind the OAuth wall and is not published anywhere, so no
+tool inventory is recorded here.
+
+Backed by: techstars, jackson-square-ventures — https://cloverleaf.ai/

@@ -1,0 +1,31 @@
+generated: '2026-08-14'
+method: probed
+source: observed response headers from https://mcp.cloverleaf.ai/ and https://app.cloverleaf.ai/
+limit_count: 0
+limits: []
+response_headers: []
+note: >-
+  No rate limits are documented — Cloverleaf AI publishes no developer documentation at
+  all. Probed live: no RateLimit-*, X-RateLimit-*, or Retry-After header appears on any
+  response from mcp.cloverleaf.ai (200 on /health, 401 on the MCP root, 404 on unknown
+  paths). An agent therefore gets no runtime budget signal from the one surface it can
+  call. Recorded as an honest zero.
+observations:
+- host: mcp.cloverleaf.ai
+  headers_present: [x-powered-by, access-control-allow-origin, access-control-expose-headers, www-authenticate, x-cloud-trace-context, alt-svc]
+  rate_limit_headers: none
+- host: app.cloverleaf.ai
+  observed_status: 429
+  note: >-
+    Repeated probing of app.cloverleaf.ai returned HTTP 429 with an Auth0-branded HTML
+    body. That is the Auth0 tenant's own login protection throttling an unauthenticated
+    client, not a documented Cloverleaf AI API limit, and it carried no Retry-After. It
+    is recorded because it is the only throttling behaviour observed anywhere on the
+    estate.
+x-evidence:
+- url: https://mcp.cloverleaf.ai/health
+  http_status: 200
+- url: https://mcp.cloverleaf.ai/
+  http_status: 401
+- url: https://app.cloverleaf.ai/.well-known/agent.json
+  http_status: 429

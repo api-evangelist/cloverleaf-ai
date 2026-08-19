@@ -1,0 +1,55 @@
+generated: '2026-08-14'
+method: probed
+source: https://status.cloverleaf.ai/
+
+status_page:
+  url: https://status.cloverleaf.ai/
+  provider: Better Stack (statuspage.betteruptime.com)
+  http_status: 200
+  components:
+  - name: Cloverleaf AI Platform
+    state: Operational
+    uptime_30d_reported: 99.980%
+  observed: '2026-08-14T12:45Z — "All services are online"'
+  history_note: >-
+    The page publishes a rolling ~90-day incident history. Two downtime days were visible
+    on 2026-08-14: Jun 17 2026 (21 minutes) and Aug 01 2026 (3 minutes).
+  gap: >-
+    The status page tracks ONE component, "Cloverleaf AI Platform". The MCP server at
+    mcp.cloverleaf.ai is not listed as a separate component, so an agent operator cannot
+    tell from the status page whether the agent surface is up.
+
+versioning:
+  scheme: unversioned
+  current: null
+  docs: null
+  note: >-
+    No API version appears anywhere on the public surface. The MCP endpoint is the bare
+    host root (https://mcp.cloverleaf.ai/) with no version segment, and the MCP protocol
+    version is negotiated per session via the mcp-protocol-version header rather than
+    pinned in the URL.
+
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: >-
+    No deprecation or sunset policy is published. Probed /changelog/ and /release-notes/
+    on www.cloverleaf.ai — both 404.
+
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No SLA or uptime commitment is published publicly; the status page reports measured
+    uptime but states no target. Any SLA is presumably in the enterprise contract, which
+    is consistent with the demo-only sales motion.
+
+deprecated_operations: []
+
+x-evidence:
+- url: https://status.cloverleaf.ai/
+  http_status: 200
+- url: https://www.cloverleaf.ai/changelog/
+  http_status: 404
+- url: https://www.cloverleaf.ai/release-notes/
+  http_status: 404

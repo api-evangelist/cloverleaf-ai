@@ -1,0 +1,52 @@
+generated: '2026-08-14'
+method: probed
+source: >-
+  https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource,
+  https://auth.cloverleaf.ai/.well-known/openid-configuration
+
+# No OpenAPI exists to derive scopes from; these are read straight from the live
+# OAuth/OIDC discovery documents. Cloverleaf AI publishes no scopes reference page.
+
+schemes:
+- name: mcp-oauth2
+  source: well-known/cloverleaf-ai-oauth-protected-resource.json
+  resource: https://mcp.cloverleaf.ai/
+  authorization_servers: [https://auth.cloverleaf.ai/]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.cloverleaf.ai/authorize
+    tokenUrl: https://auth.cloverleaf.ai/oauth/token
+
+# Scopes the MCP protected resource declares it accepts (RFC 9728 scopes_supported).
+scopes:
+- scope: openid
+  description: OpenID Connect authentication; issue an ID token.
+  flows: [authorizationCode]
+  sources: [well-known/cloverleaf-ai-oauth-protected-resource.json]
+- scope: profile
+  description: Basic profile claims (name, nickname, picture).
+  flows: [authorizationCode]
+  sources: [well-known/cloverleaf-ai-oauth-protected-resource.json]
+- scope: email
+  description: Email address and verification status claims.
+  flows: [authorizationCode]
+  sources: [well-known/cloverleaf-ai-oauth-protected-resource.json]
+- scope: offline_access
+  description: Issue a refresh token so the agent session survives access-token expiry.
+  flows: [authorizationCode]
+  sources: [well-known/cloverleaf-ai-oauth-protected-resource.json]
+
+finding: >-
+  The MCP server declares ONLY the four standard OIDC/OAuth identity scopes. There is no
+  resource-scoped permission vocabulary — nothing like read:meetings, read:opportunities
+  or write:salesforce — so the token an agent obtains carries no least-privilege signal
+  about which Cloverleaf AI data or tools it may reach. Authorization is therefore
+  enforced entirely server-side against the authenticated user's tenant entitlements.
+  This is a genuine gap in the contract, recorded rather than papered over: it is the
+  single most useful thing the provider could publish next for agent consumers.
+
+x-evidence:
+- url: https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource
+  http_status: 200
+- url: https://auth.cloverleaf.ai/.well-known/openid-configuration
+  http_status: 200

@@ -1,0 +1,52 @@
+generated: '2026-08-14'
+method: probed
+source: https://mcp.cloverleaf.ai/
+format: oauth2-error          # NOT rfc9457 — no application/problem+json is served
+
+# There is no OpenAPI to derive a 4xx/5xx catalog from and no published error reference.
+# Everything below was OBSERVED on live anonymous requests to the MCP server. It is a
+# small, honest catalog rather than an invented one.
+
+envelope:
+  content_type: application/json
+  shape:
+    error: machine-readable error code
+    error_description: human-readable detail
+  example: '{"error":"invalid_token","error_description":"Missing Authorization header"}'
+  spec: RFC 6749 section 5.2 / RFC 6750 section 3
+  challenge_header: >-
+    WWW-Authenticate: Bearer error="invalid_token", error_description="...",
+    resource_metadata="https://mcp.cloverleaf.ai/.well-known/oauth-protected-resource"
+
+problems:
+- status: 401
+  code: invalid_token
+  title: Missing or invalid bearer token
+  detail_observed: Missing Authorization header
+  remediation: >-
+    Complete the OAuth authorization-code + PKCE flow against
+    https://auth.cloverleaf.ai/ (discovered from the resource_metadata URL in the
+    challenge) and retry with Authorization: Bearer <access_token>.
+  source_operation: 'POST https://mcp.cloverleaf.ai/ (jsonrpc initialize, tools/list)'
+  observed: '2026-08-14'
+- status: 404
+  code: null
+  title: Unknown path
+  detail_observed: 'Cannot GET /mcp'
+  content_type: text/html
+  remediation: >-
+    The MCP endpoint is the host ROOT (https://mcp.cloverleaf.ai/). Express returns an
+    HTML 404 for /mcp, /sse and /openapi.json. Note this 404 is NOT JSON, so a client
+    parsing every response as JSON will fail on a wrong path rather than get a usable
+    error.
+  source_operation: 'GET https://mcp.cloverleaf.ai/mcp'
+  observed: '2026-08-14'
+
+gaps:
+- >-
+  No error reference is published. JSON-RPC application-level errors (the MCP -32xxx
+  codes and any Cloverleaf-specific tool errors) are behind the OAuth wall and could not
+  be enumerated without authenticating.
+- >-
+  The 404 path returns HTML while the 401 returns JSON — inconsistent error typing on
+  the same host.

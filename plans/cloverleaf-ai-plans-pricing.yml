@@ -1,0 +1,23 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.cloverleaf.ai/pricing/
+plan_count: 0
+plans: []
+model: contact-sales
+currency: null
+note: >-
+  Cloverleaf AI publishes no pricing. https://www.cloverleaf.ai/pricing/ returns HTTP 301
+  to https://www.cloverleaf.ai/get-a-demo/, as do /get-started/ and /see-it-in-action/ —
+  every commercial path on the site funnels into one demo-request form. There are no
+  tiers, no list price, no quota and no overage published anywhere on the eight-page
+  marketing site. This is an enterprise, demo-gated sales motion, recorded as a genuine
+  zero rather than omitted.
+x-evidence:
+- url: https://www.cloverleaf.ai/pricing/
+  http_status: 301
+  redirects_to: https://www.cloverleaf.ai/get-a-demo/
+- url: https://www.cloverleaf.ai/get-started/
+  http_status: 301
+  redirects_to: https://www.cloverleaf.ai/get-a-demo/
+- url: https://www.cloverleaf.ai/get-a-demo/
+  http_status: 200

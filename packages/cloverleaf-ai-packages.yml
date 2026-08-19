@@ -1,0 +1,31 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, rubygems.org, crates.io, and the company's own
+  public surface (www.cloverleaf.ai, llms.txt, sitemap)
+package_count: 0
+packages: []
+note: >-
+  Cloverleaf AI ships no first-party client library on any public registry. Searched npm
+  ("cloverleaf", 20 results — all unrelated third parties: a password app, a parking
+  component, a Clover POS connector, and an unaffiliated "Cloverleaf Interoperability
+  Standard"), PyPI (cloverleaf, cloverleaf-ai, cloverleafai — all 404), RubyGems (404)
+  and crates.io. No SDK, CLI or download link appears on the company site or in its
+  llms.txt. No `SDKs` pointer is emitted in apis.yml because there is no SDK to point at.
+  The one machine-callable surface, the MCP server, is consumed over HTTP by a generic
+  MCP client, so a language SDK is arguably not required — but that also means there is
+  no versioned, dated first-party artifact from which release currency could be read.
+registries_checked:
+- registry: npm
+  query: cloverleaf
+  first_party_hits: 0
+- registry: pypi
+  names: [cloverleaf, cloverleaf-ai, cloverleafai]
+  http_status: [404, 404, 404]
+- registry: rubygems
+  name: cloverleaf
+  http_status: 404
+- registry: crates.io
+  name: cloverleaf
+  http_status: 403
+  note: crates.io refused the anonymous request; no evidence either way
