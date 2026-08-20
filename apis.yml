@@ -51,6 +51,18 @@ tags:
 - Procurement
 - RFP
 - Legislative Intelligence
+- Speech-to-Text
+- Artificial Intelligence
+tags_raw:
+- Company
+- Government
+- B2G
+- Sales Intelligence
+- Public Sector
+- GovTech
+- Procurement
+- RFP
+- Legislative Intelligence
 - Speech to Text
 - Artificial Intelligence
 apis:
@@ -69,6 +81,12 @@ apis:
   humanURL: https://www.cloverleaf.ai/how-it-works/
   baseURL: https://mcp.cloverleaf.ai/
   tags:
+  - MCP
+  - Authentication
+  - Agents
+  - Government
+  - Sales Intelligence
+  tags_raw:
   - MCP
   - Model Context Protocol
   - OAuth
