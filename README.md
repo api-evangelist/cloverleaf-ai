@@ -64,16 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cloverleaf AI is a B2G (business-to-government) sales intelligence platform that monitors 45,000+
-government organizations and turns public government meetings into pre-RFP buying signals.
+Cloverleaf AI is a business-to-government (B2G) sales intelligence platform, headquartered in Denver, Colorado, that monitors 45,000+ government organizations across federal, state, local, and education (SLED) agencies and turns 1.5 million public government meetings into pre-RFP buying signals. It analyzes committee meetings, budget discussions, and procurement activity, applies custom speech-to-text and speaker "vocal fingerprinting" (70,000+ verified speakers) to attribute officials' positions, and delivers a prioritized, territory-specific daily brief to each seller, synced to Salesforce, so government contractors reach buyers before the RFP is published. Products include the Opportunity Database and Vocal Fingerprinting. Cloverleaf AI is Techstars-backed and raised seed funding led by Jackson Square Ventures. It publishes no REST API, OpenAPI, SDK or developer portal, but it does operate a remote, OAuth-protected Model Context Protocol (MCP) server at mcp.cloverleaf.ai that exposes the platform to AI agents — an agent surface the company documents nowhere on its own site. The platform is otherwise delivered as a SaaS product with a Salesforce integration and a demo-request sales motion.
 
-**What this profile found.** Cloverleaf AI publishes no REST API, no OpenAPI, no SDK and no developer
-portal — its eight-page marketing site funnels every commercial path into a demo request. It does,
-however, operate a **remote, OAuth-protected Model Context Protocol (MCP) server** at
-`https://mcp.cloverleaf.ai/`, discovered by host enumeration rather than from any documentation. The
-server speaks MCP Streamable HTTP and advertises a complete RFC 9728 + RFC 8414 authorization
-discovery chain (PKCE S256, dynamic client registration) pointing at the company's own Auth0 tenant
-at `auth.cloverleaf.ai`. Its tool list is behind the OAuth wall and is not published anywhere, so no
-tool inventory is recorded here.
+**Areas:** Company · Government · B2G · Sales Intelligence · Public Sector · GovTech · Procurement · RFP · Legislative Intelligence · Speech-to-Text · Artificial Intelligence
 
-Backed by: techstars, jackson-square-ventures — https://cloverleaf.ai/
+## Cloverleaf AI on APIs.io
+
+Everything profiled for Cloverleaf AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cloverleaf-ai/](https://apis.io/providers/cloverleaf-ai/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Cloverleaf AI MCP Server](https://apis.io/apis/cloverleaf-ai/cloverleaf-ai-mcp-server/) — A remote, OAuth-protected Model Context Protocol server that exposes Cloverleaf AI's government meeting intelligence to AI agents and assistants. Found by…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cloverleaf-ai-mcp](https://apis.io/servers/cloverleaf-ai/cloverleaf-ai-mcp/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cloverleaf Ai Authentication](https://apis.io/security/cloverleaf-ai/cloverleaf-ai-authentication/)
+- [Cloverleaf Ai Domain Security](https://apis.io/security/cloverleaf-ai/cloverleaf-ai-domain-security/)
+- [Cloverleaf Ai Trust Center](https://apis.io/security/cloverleaf-ai/cloverleaf-ai-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Cloverleaf Ai Scopes](https://apis.io/scopes/cloverleaf-ai/cloverleaf-ai-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cloverleaf Ai Plans Pricing](https://apis.io/plans/cloverleaf-ai/cloverleaf-ai-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cloverleaf Ai Rate Limits](https://apis.io/rate-limits/cloverleaf-ai/cloverleaf-ai-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.cloverleaf.ai/)
+- [Getting started](https://www.cloverleaf.ai/get-started/)
+- [Sign up](https://www.cloverleaf.ai/get-started/)
+- [Blog](https://www.cloverleaf.ai/blog/)
+- [Trust centre](https://trust.cloverleaf.ai/)
+- [Terms of service](https://www.cloverleaf.ai/terms-of-service/)
+- [Privacy policy](https://www.cloverleaf.ai/privacy-policy/)
+- [Status](https://status.cloverleaf.ai/)
+
+## API Evangelist rating
+
+**Kin Score 26.5** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 34.2 |
+
+**Agent readiness 32.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 31.8** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cloverleaf-ai/](https://apis.io/providers/cloverleaf-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cloverleaf AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cloverleaf-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
